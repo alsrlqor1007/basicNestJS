@@ -1,5 +1,7 @@
 ## Nest JS 기초 실습
 
+Code States Final Project Roadgram에 Nest JS 적용을 위해 Inflearn에서 기본 학습하기
+
 - https://github.com/jaewonhimnae/nestjs-board-app
 
 <p align="center">
