@@ -35,7 +35,8 @@ export class BoardsService {
     // }
 
     // deleteBoard(id: string): void {
-    //     this.boards = this.boards.filter((board) => board.id !== id);
+    //     const found = this.getBoardById(id);
+    //     this.boards = this.boards.filter((board) => board.id !== found.id);
     // }
 
     // updateBoardStatus(id: string, status: BoardStatus): Board {
@@ -56,7 +57,7 @@ export class BoardsService {
 
         if (!found) {
             throw new NotFoundException(`Can't find Board with id ${id}`);
-        }
+        } // 내장 instance
 
         return found;
     }    

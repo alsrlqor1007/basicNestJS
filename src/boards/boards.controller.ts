@@ -3,6 +3,7 @@ import { BoardsService } from './boards.service';
 import { BoardStatus } from './board-status.enum';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { Board } from './board.entity';
+import { BoardStatusValidationPipe } from './pipes/board-status-validation.pipe';
 
 
 @Controller('boards')
@@ -67,7 +68,7 @@ export class BoardsController {
     @Patch('/:id/status')
     updateBoardStatus(
         @Param('id', ParseIntPipe) id: number,
-        @Body('status') status: BoardStatus
+        @Body('status', BoardStatusValidationPipe) status: BoardStatus
     ): Promise <Board> {
         return this.boardsService.updateBoardStatus(id, status);
     }
