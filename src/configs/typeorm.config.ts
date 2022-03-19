@@ -2,12 +2,12 @@ import { TypeOrmModuleOptions } from "@nestjs/typeorm";
 
 export const typeORMConfig : TypeOrmModuleOptions = {
     // DB Type
-    type: 'mysql',
+    type: 'postgres',
     host: 'localhost',
-    port: 3306,
-    username: 'root',
-    password: 'alsrlqor',
-    database: 'boardApp_inflearn_nestjs',
+    port: 5432,
+    username: 'postgres',
+    password: 'postgres',
+    database: 'BoardProject',
     entities: [__dirname + `/../**/*.entity.{js,ts}`],
     // entitiy를 이용해 데이터베이스 테이블을 생성하기 때문에 entitiy 파일 위치를 설정해준다.
     synchronize: true
