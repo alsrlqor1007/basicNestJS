@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { User } from 'src/auth/user.entity';
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { BoardStatus } from "./board-status.enum";
 
 @Entity() // CREATE TABLE
@@ -14,6 +15,9 @@ export class Board extends BaseEntity {
 
     @Column()
     status: BoardStatus;
+
+    @ManyToOne(type => User, user => user.boards, { eager: false })
+    user: User;
 }
 
-// 헤딩 컬럼들을 가진 Board 테이블 자동  생성
+// 해당 컬럼들을 가진 Board 테이블 자동 생성

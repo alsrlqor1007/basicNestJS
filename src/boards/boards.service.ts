@@ -5,6 +5,7 @@ import { CreateBoardDto } from './dto/create-board.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BoardRepository } from './board.repository';
 import { Board } from "./board.entity";
+import { User } from 'src/auth/user.entity';
 
 @Injectable()
 export class BoardsService {
@@ -62,7 +63,7 @@ export class BoardsService {
         return found;
     }    
 
-    createBoard(createBoardDto: CreateBoardDto): Promise <Board> {
+    createBoard(createBoardDto: CreateBoardDto, user: User): Promise <Board> {
         // await 여기서 쓰지 않기 때문에 async 삭제
         // Repository로 넘겨줬고 거기 있는 것을 가져와서 사용
 
@@ -74,11 +75,11 @@ export class BoardsService {
 
         // await this.boardRepository.save(board);
 
-        return this.boardRepository.createBoard(createBoardDto);
+        return this.boardRepository.createBoard(createBoardDto, user);
     }
 
-    async deleteBoard(id: number): Promise <void> {
-        const result = await this.boardRepository.delete(id);
+    async deleteBoard(id: number, user: User): Promise <void> {
+        const result = await this.boardRepository.delete({id, user});
 
         if (result.affected === 0) {
             throw new NotFoundException(`Can't find Board with id ${id}`);
@@ -94,7 +95,16 @@ export class BoardsService {
         return board;
     }
 
-    async getAllBoards(): Promise <Board[]> {
-        return this.boardRepository.find();
+    async getAllBoards(user: User): Promise <Board[]> {
+        // return this.boardRepository.find();
+
+        const query = this.boardRepository.createQueryBuilder('board');
+
+        query.where('board.userId = :userId', { userId: user.id });
+        // id 일치하는 데이터
+
+        const boards = await query.getMany(); // 해당되는 전체 조회
+
+        return boards;
     }
 }
